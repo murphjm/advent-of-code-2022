@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    ifstream file ("/Users/jmurphy/git/aoc2022/assets/problem1_input.txt"); 
+    ifstream file ("./assets/problem1_input.txt"); 
     vector<int> elves;
     string line;
     int calories = 0;
