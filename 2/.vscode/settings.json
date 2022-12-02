@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "__config": "cpp",
+        "type_traits": "cpp",
+        "unordered_map": "cpp",
+        "fstream": "cpp",
+        "string": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp"
+    }
+}
