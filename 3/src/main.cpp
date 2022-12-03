@@ -15,43 +15,17 @@ int part1() {
     string line;
     int sum = 0;
 
-    if(file.is_open()) 
-    {
-        while (getline(file, line)) {
-            int *letters = new int[52];
-            int middle = line.length() / 2;
-            string left = line.substr(0, middle);
-            string right = line.substr(middle, line.length());
+    while(std::getline(file, line)) {
+        const auto c = *std::find_first_of(std::begin(line), std::next(std::begin(line), line.size()/2),
+                                        std::next(std::begin(line), line.size()/2), std::end(line));
 
-            for(unsigned long i = 0; i < left.length() / 2; i++) {
-                if(isupper(left[i])) {
-                    letters[(left[i] - 'A') + 26] = 1;
-                } else {
-                    letters[left[i] - 'a'] = 1;
-                }
-
-                if(isupper(right[i])) {
-                    letters[(right[i] - 'A') + 26]++;
-                } else {
-                    letters[right[i] - 'a']++;
-                }
-            }
-
-            for(int i = 0; i < 52; i++) {
-                // printf("%d", letters[i]);
-                int count = letters[i] / 2;
-                if(count >= 1) {
-                    sum += (letters[i] + 1) * count;
-                }
-            }
-
-            // printf("\n\n");
+        printf("%c\n", c);
+        if (c >= 'a') {
+            sum += c - 'a' + 1;
+        } else {
+            sum += c - 'A' + 1 + 26;
         }
     }
-    else
-        cout<<"Couldn't open the input file\n";
-
-    file.close();
 
     return sum;
 }
