@@ -19,21 +19,33 @@ int part1() {
     {
         while (getline(file, line)) {
             int *letters = new int[52];
+            int middle = line.length() / 2;
+            string left = line.substr(0, middle);
+            string right = line.substr(middle, line.length());
 
-            for(unsigned long i = 0; i < line.length(); i++) {
-                if(isupper(line[i])) {
-                    letters[(line[i] - 'A') + 26]++;
+            for(unsigned long i = 0; i < left.length() / 2; i++) {
+                if(isupper(left[i])) {
+                    letters[(left[i] - 'A') + 26] = 1;
                 } else {
-                    letters[line[i] - 'a']++;
+                    letters[left[i] - 'a'] = 1;
+                }
+
+                if(isupper(right[i])) {
+                    letters[(right[i] - 'A') + 26]++;
+                } else {
+                    letters[right[i] - 'a']++;
                 }
             }
 
             for(int i = 0; i < 52; i++) {
+                // printf("%d", letters[i]);
                 int count = letters[i] / 2;
                 if(count >= 1) {
                     sum += (letters[i] + 1) * count;
                 }
             }
+
+            // printf("\n\n");
         }
     }
     else
