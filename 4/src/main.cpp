@@ -7,35 +7,30 @@
 
 using namespace std;
 
-int part1();
-vector<string> split(const string& str, const string& delim);
+pair<int, int> get_shifts();
 
 int main() {
-    printf("Number of fully contained pairs: %d\n", part1());
+    auto solutions = get_shifts();
+    printf("Number of fully contained pairs: %d\n", solutions.first);
+    printf("Number of fully contained pairs: %d\n", solutions.second);
 }
 
-int part1() {
+pair<int, int> get_shifts() {
     ifstream file ("./assets/problem_input.txt"); 
     string line;
-    int sum = 0;
-    string sol;
-    vector<string> shifts;
+    int sum1 = 0, sum2 = 0;
+    string trimmed;
     vector<int> nums;
 
     while(std::getline(file, line)) {
-        auto row = split(line, ",");
-        shifts.push_back(row[0]);
-        shifts.push_back(row[1]);
+        replace(line.begin(), line.end(), ',', ' ');
+        replace(line.begin(), line.end(), '-', ' ');
+        trimmed.append(line).append(" ");
     }
 
-    for(auto s: shifts) {
-        replace(s.begin(), s.end(), '-', ' ');
-        sol.append(s).append(" ");
-    }
-
-    stringstream ss(sol);
+    stringstream ss(trimmed);
     
-    for(int i = 0; ss >> i; ) {
+    for(int i = 0; ss >> i;) {
         nums.push_back(i);
     }
 
@@ -47,27 +42,15 @@ int part1() {
         auto fourth = nums[l + 3];
 
         if((first <= third && second >= fourth) || (third <= first && fourth >= second)) {
-            sum++;
+            sum1++;
+        }
+
+        if((first <= third && second >= third) || (first <= fourth && second >= fourth) || (third <= first && fourth >= second) || (third <= second && fourth >= second)) {
+            sum2++;
         }
 
         l += 4;
     }
 
-    return sum;
-}
-
-vector<string> split(const string& str, const string& delim)
-{
-    vector<string> tokens;
-    size_t prev = 0, pos = 0;
-    do
-    {
-        pos = str.find(delim, prev);
-        if (pos == string::npos) pos = str.length();
-        string token = str.substr(prev, pos-prev);
-        if (!token.empty()) tokens.push_back(token);
-        prev = pos + delim.length();
-    }
-    while (pos < str.length() && prev < str.length());
-    return tokens;
+    return make_pair(sum1, sum2);
 }
