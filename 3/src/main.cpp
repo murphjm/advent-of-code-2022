@@ -40,21 +40,21 @@ int part2() {
     string line;
     int sum = 0;
 
-    std::array<int, 58> counter;
-    std::fill(std::begin(counter), std::end(counter), 0);
-    while(std::getline(file, line)) {
-        std::sort(std::begin(line), std::end(line));
-        line.erase(std::unique(std::begin(line), std::end(line)), std::end(line));
+    array<int, 58> letters;
+    fill(begin(letters), end(letters), 0);
+    while(getline(file, line)) {
+        sort(begin(line), end(line));
+        line.erase(unique(begin(line), end(line)), end(line));
         for (const auto c : line) {
-            counter[c - 'A'] += 1;
-            if (counter[c - 'A'] == 3) {
+            letters[c - 'A'] += 1;
+            if (letters[c - 'A'] == 3) {
                 if (c >= 'a') {
                     sum += c - 'a' + 1;
                 } else {
                     sum += c - 'A' + 1 + 26;
                 }
-                
-                std::fill(std::begin(counter), std::end(counter), 0);
+
+                fill(begin(letters), end(letters), 0);
                 break;
             }
         }
